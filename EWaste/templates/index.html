@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Home - Backend</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .logo {
+        display: flex;
+        justify-content: center;
+    }
+    img{
+        height: 120px;
+        border-radius: 50%;
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .api-card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      padding: 20px;
+      margin-bottom: 15px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .api-card:hover {
+      transform: scale(1.02);
+    }
+
+    .api-title {
+      font-size: 20px;
+      color: #007bff;
+      margin-bottom: 8px;
+      text-decoration: none;
+    }
+
+    .api-desc {
+      color: #555;
+      margin: 0;
+    }
+    .redirect-btn {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .redirect-btn button {
+        margin: auto;
+        padding: 8px;
+        background-color: #007bff;
+        border: none;
+        transition: transform 0.2s ease-in-out;
+    }
+    .redirect-btn button a{
+        text-decoration: none;
+        color: white;
+    }
+    .redirect-btn button:hover {
+        transform: scale(1.1);
+    }
+    footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      .api-card {
+        padding: 15px;
+      }
+
+      .api-title {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+        <img src="../static/logo.png" alt="">
+    </div>
+    <h1>Welcome to Backend API Portal</h1>
+
+    <div class="api-card">
+      <a href="/api/owners/" class="api-title">/api/owners/</a>
+      <p class="api-desc">Returns a list of all owners in the database.</p>
+    </div>
+
+    <div class="api-card">
+      <a href="/api/classify-image/" class="api-title">/api/classify-image/</a>
+      <p class="api-desc">Classify your scrap and get accuracy.</p>
+    </div>
+
+    <div class="api-card">
+      <a href="/api/check-authentication/" class="api-title">/api/check-authentication/</a>
+      <p class="api-desc">Create and view room bookings.</p>
+    </div>
+
+    <div class="api-card">
+      <a href="/admin/" class="api-title">/admin/</a>
+      <p class="api-desc">Access the Django admin dashboard.</p>
+    </div>
+    <div class='redirect-btn'>
+        <button>
+            <a href="http://localhost:5173/" target="blank">
+                Explore the Scrapbridge Platform
+            </a>
+        </button>
+    </div>
+    <footer>
+      © 2025 ScrapBridge API Dashboard
+    </footer>
+  </div>
+</body>
+</html>
