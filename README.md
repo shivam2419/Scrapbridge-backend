@@ -8,6 +8,7 @@ https://drive.google.com/file/d/1bkjLHavZuKS4tNPbYORWf5RfANMBBmTS/view?usp=shari
 # ScrapBridge ♻️
 
 **ScrapBridge** is a web-based platform that connects households with certified scrap collectors. The goal is to make recycling easier, smarter, and more accessible by allowing users to schedule pickups, classify scrap, and view real-time scrap prices.
+
 **Live at : https://scrapbridge-api.onrender.com/**
 ---
 
