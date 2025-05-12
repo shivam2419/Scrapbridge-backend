@@ -2,15 +2,13 @@ This is ScrapBridge project backend part written in Django, there is all the api
 To run the project in your device, please download both the frontend and backend respositery.
 Frontend repositery link : https://github.com/shivam2419/Scrapbridge-frontend/
 
-**Live at : https://scrapbridge-api.onrender.com/**
-
 # Platform overview
 https://drive.google.com/file/d/1bkjLHavZuKS4tNPbYORWf5RfANMBBmTS/view?usp=sharing
 
 # ScrapBridge ♻️
 
 **ScrapBridge** is a web-based platform that connects households with certified scrap collectors. The goal is to make recycling easier, smarter, and more accessible by allowing users to schedule pickups, classify scrap, and view real-time scrap prices.
-
+**Live at : https://scrapbridge-api.onrender.com/**
 ---
 
 ## 🌟 Features
