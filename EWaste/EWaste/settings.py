@@ -1,15 +1,15 @@
 from pathlib import Path
 import os
 from decouple import config
+from datetime import timedelta
 
-
-SECRET_KEY = ""
-GOOGLE_CLIENT_ID = ""
-GOOGLE_CLIENT_SECRET = ""
-RAZORPAY_API_KEY = ""
-RAZORPAY_API_SECRET_KEY = ""
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ""
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ""
+SECRET_KEY = config('SECRET_KEY')
+GOOGLE_CLIENT_ID = config('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = config('GOOGLE_CLIENT_SECRET')
+RAZORPAY_API_KEY = config('RAZORPAY_API_KEY')
+RAZORPAY_API_SECRET_KEY = config('RAZORPAY_API_SECRET_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,6 +30,7 @@ ALLOWED_HOSTS = ['*']
 SITE_ID = 1  # Required for django-allauth
 # Application definition
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.sites',  # Required for django-allauth
     'allauth',
     'allauth.account',
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'rest_framework',
-    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -185,3 +186,9 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "http://localhost:5173/login/"
 
 RAZORPAY_API_KEY = RAZORPAY_API_KEY
 RAZORPAY_API_SECRET_KEY = RAZORPAY_API_SECRET_KEY
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),  # Access token valid for 30 days
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60), # Refresh token valid for 60 days
+    # other options...
+}

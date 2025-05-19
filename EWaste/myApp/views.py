@@ -13,7 +13,32 @@ from .serializers import *
 from social_django.utils import psa
 import razorpay
 from EWaste.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
+from rest_framework.permissions import IsAdminUser
 
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
+
+@api_view(['GET'])
+@permission_classes([])
+def delete_all_tokens(request):
+    count, _ = OutstandingToken.objects.all().delete()
+    print("Deleted all tokens")
+    return JsonResponse({'message': f'Deleted {count} tokens'})
+
+@api_view(['GET'])
+@permission_classes([])  # or use [] to remove auth for testing
+def list_tokens(request):
+    tokens = OutstandingToken.objects.all()
+    return Response({
+        'total_tokens': tokens.count(),
+        'tokens': [
+            {
+                'user_id': token.user_id,
+                'jti': token.jti,
+                'created_at': token.created_at,
+                'expires_at': token.expires_at,
+            } for token in tokens
+        ]
+    })
 # conn = http.client.HTTPSConnection("mail-sender-api1.p.rapidapi.com")
 # headers = {
 #     'x-rapidapi-key': "41f8c5c26emsh33af3107ae7eb1fp165595jsnd6e414bce373",

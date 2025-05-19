@@ -16,6 +16,8 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/delete-tokens/', views.delete_all_tokens),
+    path('api/list-tokens/', views.list_tokens),
     # Authentication url's
     path('auth/', include('social_django.urls')), 
     path('api/auth/user/', views.get_current_user, name='current-user'), #✅
