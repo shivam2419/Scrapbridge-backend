@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import *
 from .forms import *
 from django.http import JsonResponse
+from decouple import config
 # from .predict import classify_image
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -13,9 +14,61 @@ from .serializers import *
 from social_django.utils import psa
 import razorpay
 from EWaste.settings import RAZORPAY_API_KEY, RAZORPAY_API_SECRET_KEY
-from rest_framework.permissions import IsAdminUser
-
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
+import requests
+BREVO_API_KEY = config('BREVO_API_KEY')
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def sendMail(request):
+    html_content = request.data.get("message")
+    receiver_email = request.data.get("receiver_email")
+    receiver_name = request.data.get("receiver_name")
+    subject = request.data.get("subject")
+
+    if not html_content:
+        return Response({"error": "Message content is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    url = "https://api.brevo.com/v3/smtp/email"
+    api_key = BREVO_API_KEY 
+
+    headers = {
+        "accept": "application/json",
+        "api-key": api_key,
+        "content-type": "application/json"
+    }
+
+    data = {
+        "sender": {
+            "name": "Scrapbridge",
+            "email": "csdslt2309@glbitm.ac.in"
+        },
+        "to": [
+            {
+                "email": receiver_email,
+                "name": receiver_name
+            }
+        ],
+        "subject": subject,
+        "htmlContent": html_content,
+        "textContent": "Scrapbridge - Connecting you to World 🌍 !!"
+    }
+
+    response = requests.post(url, json=data, headers=headers)
+
+    if response.status_code == 401 or response.status_code == 403:
+        return Response({"error": "Unauthorized or forbidden. Check API key or permissions."},
+                        status=status.HTTP_403_FORBIDDEN)
+
+    if response.status_code == 422:
+        return Response({"error": "Quota finished or invalid 'from'/'to' email."},
+                        status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    if response.status_code != 201:
+        return Response({"error": "Unexpected error", "details": response.json()},
+                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return Response({"message": "Mail sent successfully!"}, status=status.HTTP_200_OK)
+
 
 @api_view(['GET'])
 @permission_classes([])
@@ -424,11 +477,13 @@ def getOrderDetail(request, order_id):
 
         # Fetch the user using the user_id from the recycle_data
         user = User.objects.get(enduser=recycle_data.user)  # Assuming user_id is a field in RecycleForm
-        
+        owner = recycle_data.organisation
         # Add the username to the serializer data
         recycle_data_serialized = RecycleFormSerializer(recycle_data)
         response_data = recycle_data_serialized.data
         response_data['user'] = user.username  # Add the username to the response
+        response_data['email'] = user.email  # Add the username to the response
+        response_data['organisation_phone_number'] = owner.phone  # Add the username to the response
         
         return Response({'data': response_data}, status=status.HTTP_200_OK)
 

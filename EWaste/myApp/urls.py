@@ -50,6 +50,7 @@ urlpatterns = [
     path('api/payment-status/<str:order_id>/<str:username>/<int:owner_id>/<int:amount>/<str:transaction_id>/', views.addPaymentStatus, name='add-payment-status'), #✅
     # Image classification url
     # path('api/classify-image/', views.classify_image_view, name='classify-image'), #✅
+    path('api/send-mail/', views.sendMail, name='send-mail'),
     # core django path
     path('', views.index, name='index'),
     
